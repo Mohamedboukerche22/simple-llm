@@ -3,16 +3,16 @@ from PIL import Image, ImageDraw, ImageOps
 import numpy as np
 import tensorflow as tf
 
-# Load trained model
+
 MODEL_PATH = "digit_model.h5"
 model = tf.keras.models.load_model(MODEL_PATH)
 
-# Main window
+
 window = tk.Tk()
 window.title("Handwritten Calculator")
 window.geometry("320x420")
 
-# Drawing area
+
 canvas = tk.Canvas(window, width=200, height=200, bg="white")
 canvas.pack(pady=10)
 
@@ -31,7 +31,7 @@ def clear_canvas():
     canvas.delete("all")
     draw.rectangle((0, 0, 200, 200), fill=255)
 
-# Expression handling
+
 expression = ""
 
 def predict_symbol():
@@ -44,8 +44,6 @@ def predict_symbol():
     pred = model.predict(arr)
     result = np.argmax(pred)
 
-    # Interpret digits and some operators manually for now
-    # If you trained on digits only (0–9), we’ll use buttons for operators
     symbol = str(result)
     expression += symbol
     result_label.config(text=f"Expression: {expression}")
@@ -66,14 +64,14 @@ def calculate():
         result_label.config(text="Error!")
         expression = ""
 
-# Buttons
+
 btn_frame = tk.Frame(window)
 btn_frame.pack(pady=5)
 
 tk.Button(btn_frame, text="Predict", command=predict_symbol, width=10).pack(side="left", padx=5)
 tk.Button(btn_frame, text="Clear", command=clear_canvas, width=10).pack(side="left", padx=5)
 
-# Operator buttons
+
 op_frame = tk.Frame(window)
 op_frame.pack(pady=5)
 
